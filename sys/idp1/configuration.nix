@@ -17,4 +17,4 @@
   networking.interfaces.ens32.useDHCP = true;
 
   system.stateVersion = "22.05";
-};
+}
