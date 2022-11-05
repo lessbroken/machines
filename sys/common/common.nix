@@ -12,7 +12,7 @@
 
   # Tailscale / remote access
   services.tailscale.enable = true;
-  services.firewall.checkReversePath = "loose";
+  networking.firewall.checkReversePath = "loose";
 
   services.openssh = {
     enable = true;
