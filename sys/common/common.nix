@@ -8,21 +8,25 @@
   nixpkgs.config.allowUnfree = true;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    trusted-users = @wheel
   '';
 
-  # Tailscale / remote access
-  services.tailscale.enable = true;
-  networking.firewall.checkReversePath = "loose";
-
+  # Remote access
   services.openssh = {
     enable = true;
-    openFirewall = false;
     passwordAuthentication = false;
     kbdInteractiveAuthentication = false;
   };
 
-  networking.firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  networking.firewall.allowedTCPPorts = [ 22 ];
+
+  # Certs
+  security.acme.acceptTerms = true;
+  security.acme.defaults = {
+    email = "infra@lessbroken.org";
+    dnsProvider = "route53";
+    credentialsFile = "/var/secrets/acme-route53";
+  };
 
   # Language, console, keyboard layout, time
   i18n.defaultLocale = "en_US.UTF-8";

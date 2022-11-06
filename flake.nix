@@ -8,7 +8,10 @@
   outputs = { self, nixpkgs }: let
     mkSystem = (module: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ module ];
+      modules = [
+        ({ ... }: { nixpkgs.overlays = [ (import ./overlay) ]; })
+        module
+      ];
     }); in {
     nixosConfigurations = {
       idp1 = mkSystem ./sys/idp1/configuration.nix;

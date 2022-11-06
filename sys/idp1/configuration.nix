@@ -4,6 +4,7 @@
   imports = [
     ./generated.nix
     ../common/common.nix
+    ../../service/idp.nix
   ];
 
   networking.hostName = "idp1";
